@@ -1,13 +1,18 @@
-import { Controller } from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 import { MessagePattern, Payload } from "@nestjs/microservices";
 import { CreateTemperatureNotificationDto } from "./dto/create-temperature-notification.dto";
 import { TemperatureNotificationService } from "./temperature-notification.service";
 
-@Controller()
+@Controller("temperature")
 export class TemperatureNotificationController {
   constructor(
     private readonly temperatureNotificationService: TemperatureNotificationService
   ) {}
+
+  @Get()
+  getTemp() {
+    return this.temperatureNotificationService.getTemp();
+  }
 
   @MessagePattern("temperatureMeasurement")
   create(
